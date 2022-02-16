@@ -43,9 +43,17 @@ hardhat.config.ts
 .solcover.js
 .solhint.json
 Makefile
+.env.example
+.eslintignore
+.npmignore
+.prettierignore
+.prettierrc
+.solhintignore
+hardhat.config.js
+package.json
+yarn.lock
 
 # complementary info
-README.md
 test-record.txt
 
 #IDE
