@@ -11,6 +11,8 @@ coverage
 test_ref
 testFunction
 test
+client
+scripts
 
 # DIY dirs
 notebooks/
@@ -49,6 +51,7 @@ Makefile
 .prettierignore
 .prettierrc
 .solhintignore
+.eslintrc.js
 hardhat.config.js
 package.json
 yarn.lock
