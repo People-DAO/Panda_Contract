@@ -1,0 +1,94 @@
+@import '~antd/dist/antd.css';
+.App {
+  width: 100%;
+  height: 800px;
+}
+
+.tabs{
+  width: 100%;
+  background-color: #070a0e;
+}
+
+.ant-tabs-nav{
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  justify-content: space-between;
+}
+.ant-tabs-top > .ant-tabs-nav, .ant-tabs-bottom > .ant-tabs-nav, .ant-tabs-top > div > .ant-tabs-nav, .ant-tabs-bottom > div > .ant-tabs-nav{
+  margin-bottom: 0;
+}
+.modal_c .ant-modal-content{
+  width: 450px;
+}
+.modalctabnav{
+  width: 100%;
+  background-color: #ffffff;
+}
+.modalctabnav .ant-tabs-tab-btn{
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #070a0e;
+}
+
+.modal_market .ant-modal-content{
+  width: 450px;
+}
+
+.modalmarkettabnav{
+  width: 100%;
+  background-color: #ffffff;
+}
+.modalmarkettabnav .ant-tabs-tab-btn{
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #070a0e;
+}
+
+.modal_p .ant-modal-content{
+  width: 450px;
+}
+.modalptabnav{
+  width: 100%;
+  background-color: #ffffff;
+}
+.modalptabnav .ant-tabs-tab-btn{
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #070a0e;
+}
+
+.ant-modal-title{
+  display: flex;
+  justify-content: center;
+}
+
+.lc{
+  margin: 20px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rc{
+  width: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.ant-tabs-nav-list{
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs .ant-tabs-tab-btn{
+  font-size: 18px;
+  color: #ffffff;
+}

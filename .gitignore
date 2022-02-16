@@ -1,0 +1,53 @@
+# Hardhat dirs
+artifacts
+cache
+deploy
+deployments
+node_modules
+# scripts
+data
+typechain
+coverage
+test_ref
+testFunction
+test
+
+# DIY dirs
+notebooks/
+contracts_ref/
+ref_contracts/
+deploy_all
+verify
+task
+config
+
+# debug dirs
+debug
+
+# ignore dirs
+.DS_Store
+
+# hardhat files
+package-lock.json
+.env
+.slither.json
+update-contracts.py
+yarn-error.log
+tenderly.yaml
+coverage.json
+
+# config files
+.env
+hardhat.config.ts
+.mocharc.json
+.solcover.js
+.solhint.json
+Makefile
+
+# complementary info
+README.md
+test-record.txt
+
+#IDE
+.idea
+.vscode

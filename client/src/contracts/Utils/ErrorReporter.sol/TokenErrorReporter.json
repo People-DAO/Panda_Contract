@@ -1,0 +1,36 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "TokenErrorReporter",
+  "sourceName": "contracts/Utils/ErrorReporter.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "error",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "info",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "detail",
+          "type": "uint256"
+        }
+      ],
+      "name": "Failure",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220794aecab1ffd48029c3eb1e5d716d2f82c6c54c2f27d2470b27f76eabefe329064736f6c63430008000033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220794aecab1ffd48029c3eb1e5d716d2f82c6c54c2f27d2470b27f76eabefe329064736f6c63430008000033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

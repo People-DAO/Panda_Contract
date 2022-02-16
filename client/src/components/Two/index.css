@@ -1,0 +1,85 @@
+
+.acontent{
+    margin: auto;
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 100px;
+}
+.content{
+    margin: auto;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+}
+
+.bodycontent{
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #3b3b3b;
+}
+
+.bodycontentL{
+    width: 18%;
+    height: 100%;
+    margin: 10px 10px 0 0;
+    background-color: rgb(29, 29, 29);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: bold;
+    color: #bbbbbb;
+}
+
+.bodycontentL_line1{
+    width: 80%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.bodycontentL_line2{
+    width: 80%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.bodycontentL_line3{
+    width: 80%;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.bodycontentL_line1_p{
+    margin: 5px;
+}
+
+.bodycontentR{
+    width: 85%;
+    height: 100%;
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(29, 29, 29);
+}
+
+.bc_tabs{
+    
+}
+.bc_tabs .ant-tabs-tab-btn{
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+  }

@@ -1,0 +1,271 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Denominations",
+  "sourceName": "contracts/Oracle/Denominations.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "ARS",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "AUD",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "BRL",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "BTC",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "CAD",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "CHF",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "CNY",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ETH",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "EUR",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "GBP",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "INR",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "JPY",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "KRW",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "NGN",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "NZD",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "PHP",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "RUB",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "SGD",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "USD",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ZAR",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b50610316806100206000396000f3fe608060405234801561001057600080fd5b506004361061016c5760003560e01c806356ef4514116100cd578063a4a2359511610081578063e774928e11610066578063e774928e1461020f578063f37fcc4214610217578063fd760c491461021f5761016c565b8063a4a23595146101ff578063ca9d1a72146102075761016c565b80638322fff2116100b25780638322fff2146101e7578063976d5e77146101ef5780639db2a472146101f75761016c565b806356ef4514146101d75780636b09583c146101df5761016c565b80632792949d116101245780632e79477f116101095780632e79477f146101bf578063465bd0a3146101c757806353f7c367146101cf5761016c565b80632792949d146101af578063294a2bf2146101b75761016c565b80630c012834116101555780630c0128341461019757806319342a641461019f5780631bf6c21b146101a75761016c565b806301b8b3391461017157806303d698f21461018f575b600080fd5b610179610227565b60405161018691906102bf565b60405180910390f35b61017961022d565b610179610233565b610179610238565b61017961023d565b610179610243565b61017961025b565b610179610261565b610179610267565b61017961026d565b610179610273565b610179610279565b61017961027f565b610179610297565b61017961029d565b6101796102a3565b6101796102a8565b6101796102ae565b6101796102b4565b6101796102ba565b61033a81565b61023681565b602081565b607c81565b61034881565b73bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb81565b6103d281565b6102be81565b61018881565b61026081565b61019a81565b6103da81565b73eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee81565b61028381565b6102c681565b609c81565b61022a81565b61016481565b6102f481565b602481565b73ffffffffffffffffffffffffffffffffffffffff9190911681526020019056fea2646970667358221220029f5e4900de6e9ae049d69ded624eab46d8e29dd5c22518fbda2bfd255a82b464736f6c63430008000033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061016c5760003560e01c806356ef4514116100cd578063a4a2359511610081578063e774928e11610066578063e774928e1461020f578063f37fcc4214610217578063fd760c491461021f5761016c565b8063a4a23595146101ff578063ca9d1a72146102075761016c565b80638322fff2116100b25780638322fff2146101e7578063976d5e77146101ef5780639db2a472146101f75761016c565b806356ef4514146101d75780636b09583c146101df5761016c565b80632792949d116101245780632e79477f116101095780632e79477f146101bf578063465bd0a3146101c757806353f7c367146101cf5761016c565b80632792949d146101af578063294a2bf2146101b75761016c565b80630c012834116101555780630c0128341461019757806319342a641461019f5780631bf6c21b146101a75761016c565b806301b8b3391461017157806303d698f21461018f575b600080fd5b610179610227565b60405161018691906102bf565b60405180910390f35b61017961022d565b610179610233565b610179610238565b61017961023d565b610179610243565b61017961025b565b610179610261565b610179610267565b61017961026d565b610179610273565b610179610279565b61017961027f565b610179610297565b61017961029d565b6101796102a3565b6101796102a8565b6101796102ae565b6101796102b4565b6101796102ba565b61033a81565b61023681565b602081565b607c81565b61034881565b73bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb81565b6103d281565b6102be81565b61018881565b61026081565b61019a81565b6103da81565b73eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee81565b61028381565b6102c681565b609c81565b61022a81565b61016481565b6102f481565b602481565b73ffffffffffffffffffffffffffffffffffffffff9190911681526020019056fea2646970667358221220029f5e4900de6e9ae049d69ded624eab46d8e29dd5c22518fbda2bfd255a82b464736f6c63430008000033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

@@ -1,0 +1,76 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "UnitrollerAdminStorage",
+  "sourceName": "contracts/Comptroller/ComptrollerStorage.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "compAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "comptrollerImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingAdmin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingComptrollerImplementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5061012a806100206000396000f3fe6080604052348015600f57600080fd5b5060043610605e5760003560e01c8063bb82aa5e116049578063bb82aa5e146083578063dcfbc0c7146089578063f851a44014608f57605e565b8063267822471460635780637d3ab61a14607d575b600080fd5b60696095565b6040516074919060e0565b60405180910390f35b606960a4565b606960b3565b606960c2565b606960d1565b6001546001600160a01b031681565b6004546001600160a01b031681565b6002546001600160a01b031681565b6003546001600160a01b031681565b6000546001600160a01b031681565b6001600160a01b039190911681526020019056fea264697066735822122086049694a32e59ac68bf701278dfe93404c5abca4a3d35a7859285573127f42d64736f6c63430008000033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b5060043610605e5760003560e01c8063bb82aa5e116049578063bb82aa5e146083578063dcfbc0c7146089578063f851a44014608f57605e565b8063267822471460635780637d3ab61a14607d575b600080fd5b60696095565b6040516074919060e0565b60405180910390f35b606960a4565b606960b3565b606960c2565b606960d1565b6001546001600160a01b031681565b6004546001600160a01b031681565b6002546001600160a01b031681565b6003546001600160a01b031681565b6000546001600160a01b031681565b6001600160a01b039190911681526020019056fea264697066735822122086049694a32e59ac68bf701278dfe93404c5abca4a3d35a7859285573127f42d64736f6c63430008000033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

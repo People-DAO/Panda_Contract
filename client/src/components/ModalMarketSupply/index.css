@@ -1,0 +1,31 @@
+.mmscontent{
+    width: 100%;
+    padding: 20px;
+}
+.mms_line_title{
+    width: 100%;
+    height: 80px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.mms_line{
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.mms_line_btn{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
