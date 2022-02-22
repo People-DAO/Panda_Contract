@@ -9,6 +9,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract PandaClaim is Ownable {
     bytes32 public merkleRoot;
     address public pandaToken;
+    mapping(address => uint256) public claimRecord;
+    uint256 public claimCycle;
+    
 
 
     event MerkleRootChanged(bytes32 merkleRoot);
@@ -33,9 +36,11 @@ contract PandaClaim is Ownable {
      */
     function claimTokens(uint256 amount, bytes32[] calldata merkleProof) public {
         require(amount > 0, "PandaDAO: Valid amount required.");
+        require(claimRecord[msg.sender] < claimCycle, "PandaDAO: Valid claimCycle required.");
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender, amount));
         bool valid = MerkleProof.verify(merkleProof, merkleRoot, leaf);
         require(valid, "PandaDAO: Valid proof required.");
+        claimRecord[msg.sender] = claimCycle;
 
         IERC20(token).transfer(msg.sender, amount);
         emit Claim(msg.sender, amount);
@@ -48,6 +53,7 @@ contract PandaClaim is Ownable {
      */
     function setMerkleRoot(bytes32 _merkleRoot) public onlyOwner {
         merkleRoot = _merkleRoot;
+        claimCycle++;
         emit MerkleRootChanged(_merkleRoot);
     }
 
