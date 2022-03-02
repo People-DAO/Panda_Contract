@@ -17,8 +17,6 @@ interface SmartWalletChecker {
 contract VeToken is AccessControl, VeTokenStorage {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
-
-    // constructor() {}
     
     function initialize(
         address tokenAddr_,
@@ -41,40 +39,49 @@ contract VeToken is AccessControl, VeTokenStorage {
         poolInfo.lastUpdateBlk = startBlk > block.number ? startBlk : block.number;
     }
 
-    /* ========== VIEWS ========== */
+    /* ========== VIEWS & INTERNALS ========== */
 
-    function getPoolInfo() external view returns (PoolInfo memory) {
+    function getPoolInfo() external view returns (PoolInfo memory) 
+    {
         return poolInfo;
     }
 
-    function getUserInfo(address user_) public view returns (UserInfo memory) {
+    function getUserInfo(
+        address user_
+    ) external view returns (UserInfo memory) 
+    {
         return userInfo[user_];
     }
 
-    function getTotalScore() public view returns(uint256) {
+    function getTotalScore() public view returns(uint256) 
+    {
         uint256 startBlk = (clearBlk > startBlk) && (block.number > clearBlk) ? clearBlk : startBlk;
         return block.number.sub(startBlk).mul(scorePerBlk);
     }
 
-    function getUserRatio(address user_) public view returns (uint256) {
-        return currentScore(user_, clearUserScore(user_)).mul(1e12).div(getTotalScore());
+    function getUserRatio(
+        address user_
+    ) public view returns (uint256) 
+    {
+        return currentScore(user_).mul(1e12).div(getTotalScore());
     }
 
-    // RETURN | REWARD MULTIPLIER OVER GIVEN BLOCK RANGE | INCLUDES START BLOCK
+    // Score multiplier over given block range which include start block
     function getMultiplier(
         uint256 from_, 
         uint256 to_
-    ) public view returns (uint256) {
+    ) internal view returns (uint256) 
+    {
         require(from_ <= to_, "from_ must less than to_");
         from_ = from_ >= startBlk ? from_ : startBlk;
 
         return to_.sub(from_);
     }
     
-    // clearScore
+    // Boolean value if user's score should be cleared
     function clearUserScore(
         address user_
-    ) public view returns(bool isClearScore)
+    ) internal view returns(bool isClearScore)
     {
         if ((block.number > clearBlk) && 
             (userInfo[user_].lastUpdateBlk < clearBlk)) {
@@ -82,37 +89,51 @@ contract VeToken is AccessControl, VeTokenStorage {
             }
     } 
 
-    function clearPoolScore() public view returns(bool isClearScore)
+    function clearPoolScore() internal view returns(bool isClearScore)
     {
         if ((block.number > clearBlk) && (poolInfo.lastUpdateBlk < clearBlk)) {
                 isClearScore = true;
             }     
     }
 
-    // VIEW | PENDING REWARD
+    function accScorePerToken() internal view returns (uint256 updated)
+    {
+        uint256 scoreReward =  getMultiplier(poolInfo.lastUpdateBlk, block.number)
+                                            .mul(scorePerBlk);
+
+        if (clearPoolScore()) {
+            updated = scoreReward.mul(1e12).div(totalStaked)
+                                 .mul(block.number.sub(clearBlk))
+                                 .div(block.number.sub(poolInfo.lastUpdateBlk));
+        } else {
+            updated = poolInfo.accScorePerToken.add(scoreReward.mul(1e12)
+                                               .div(totalStaked));
+        }
+    }
+
+    // Pending score to be added for user
     function pendingScore(
         address user_
-    ) public view returns (uint256 pending) {
+    ) internal view returns (uint256 pending) 
+    {
         if (userInfo[user_].amount == 0) {
             return 0;
         }
         if (clearUserScore(user_)) {
-            pending = userInfo[user_].amount.mul(poolInfo.accScorePerToken)
-                                 .div(1e12);
+            pending = userInfo[user_].amount.mul(accScorePerToken()).div(1e12);
         } else {
-            pending = userInfo[user_].amount.mul(poolInfo.accScorePerToken)
-                                    .div(1e12).sub(userInfo[user_].scoreDebt);  
+            pending = userInfo[user_].amount.mul(accScorePerToken()).div(1e12)
+                                            .sub(userInfo[user_].scoreDebt);  
         }
     }
 
     function currentScore(
-        address user_,
-        bool isClearScore_ // todo: delete
-    ) public view returns(uint256)
+        address user_
+    ) internal view returns(uint256)
     {
         uint256 pending = pendingScore(user_);
 
-        if (isClearScore_) {
+        if (clearUserScore(user_)) {
             return pending;
         } else {
             return pending.add(userInfo[user_].score);
@@ -149,11 +170,10 @@ contract VeToken is AccessControl, VeTokenStorage {
         * @dev Adheres to the ERC20 `totalSupply` interface for Aragon compatibility
         * @return Total voting power
     */
-    function totalSupply() external view returns(uint256) {
+    function totalSupply() external view returns(uint256) 
+    {
         return supply;
     }
-
-    /* ========== INTERNAL FUNCTIONS ========== */
 
     /**
         * @notice Check if the call is from a whitelisted smart contract, revert if not
@@ -161,7 +181,8 @@ contract VeToken is AccessControl, VeTokenStorage {
     */
     function assertNotContract(
         address addr_
-    ) internal {
+    ) internal 
+    {
         if (addr_ != tx.origin) {
             address checker = smartWalletChecker;
             if (checker != ZERO_ADDRESS){
@@ -175,9 +196,7 @@ contract VeToken is AccessControl, VeTokenStorage {
 
     /* ========== WRITES ========== */
 
-    function updateStakingPool(
-        bool isClearScore_
-    ) public 
+    function updateStakingPool() internal
     {
         if (block.number <= poolInfo.lastUpdateBlk || block.number <= startBlk) { 
             poolInfo.lastUpdateBlk = block.number; 
@@ -189,21 +208,10 @@ contract VeToken is AccessControl, VeTokenStorage {
             return;
         }  
 
-        uint256 scoreReward =  getMultiplier(poolInfo.lastUpdateBlk, block.number)
-                                            .mul(scorePerBlk);
-        if (isClearScore_) {
-            poolInfo.accScorePerToken = scoreReward.mul(1e12).div(totalStaked)
-                                                .mul(block.number.sub(clearBlk))
-                                                .div(block.number.sub(poolInfo.lastUpdateBlk));
-        } else {
-            poolInfo.accScorePerToken = poolInfo.accScorePerToken
-                                                .add(scoreReward.mul(1e12)
-                                                .div(totalStaked));
-        }
-
+        poolInfo.accScorePerToken = accScorePerToken();
         poolInfo.lastUpdateBlk = block.number; 
 
-        emit UpdateStakingPool(isClearScore_);
+        emit UpdateStakingPool(block.number);
     }
 
     /**
@@ -215,24 +223,23 @@ contract VeToken is AccessControl, VeTokenStorage {
     function depositFor(
         address user_,
         uint256 value_
-    ) external nonReentrant activeStake notZeroAddr(user_) {
+    ) external nonReentrant activeStake notZeroAddr(user_) 
+    {
         require (value_ > 0, "Need non-zero value");
 
         if (userInfo[user_].amount == 0) {
             assertNotContract(msg.sender);
         }
-
-        supply = supply.add(value_);
     
-        updateStakingPool(clearPoolScore());
-        
-        userInfo[user_].score = currentScore(user_, clearUserScore(user_));
+        updateStakingPool();
+        userInfo[user_].score = currentScore(user_);
         userInfo[user_].amount = userInfo[user_].amount.add(value_);
         userInfo[user_].scoreDebt = userInfo[user_].amount.mul(poolInfo.accScorePerToken).div(1e12);
         userInfo[user_].lastUpdateBlk = block.number;
 
         IERC20(token).safeTransferFrom(msg.sender, address(this), value_);
         totalStaked = totalStaked.add(value_);
+        supply = supply.add(value_);
 
         emit DepositFor(user_, value_);
     }
@@ -249,24 +256,25 @@ contract VeToken is AccessControl, VeTokenStorage {
         require (value_ > 0, "Need non-zero value");
         require (userInfo[msg.sender].amount >= value_, "Exceed staked value");
         
-        supply = supply.sub(value_);
-
-        updateStakingPool(clearPoolScore());
-
-        userInfo[msg.sender].score = currentScore(msg.sender, clearUserScore(msg.sender));
+        updateStakingPool();
+        userInfo[msg.sender].score = currentScore(msg.sender);
         userInfo[msg.sender].amount = userInfo[msg.sender].amount.sub(value_);
         userInfo[msg.sender].scoreDebt = userInfo[msg.sender].amount.mul(poolInfo.accScorePerToken).div(1e12);
         userInfo[msg.sender].lastUpdateBlk = block.number;
 
         IERC20(token).safeTransfer(msg.sender, value_);
         totalStaked = totalStaked.sub(value_);
+        supply = supply.sub(value_);
 
         emit Withdraw(value_);
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
-    function _become(VeTokenProxy veTokenProxy) public {
+    function _become(
+        VeTokenProxy veTokenProxy
+    ) public 
+    {
         require(msg.sender == veTokenProxy.owner(), "only MultiSigner can change brains");
         veTokenProxy._acceptImplementation();
     }
@@ -276,7 +284,8 @@ contract VeToken is AccessControl, VeTokenStorage {
     */
     function applySmartWalletChecker(
         address smartWalletChecker_
-    ) external onlyOwner notZeroAddr(smartWalletChecker_) {
+    ) external onlyOwner notZeroAddr(smartWalletChecker_) 
+    {
         smartWalletChecker = smartWalletChecker_;
 
         emit ApplySmartWalletChecker(smartWalletChecker_);
@@ -286,7 +295,8 @@ contract VeToken is AccessControl, VeTokenStorage {
     function recoverERC20(
         address tokenAddress, 
         uint256 tokenAmount
-    ) external onlyOwner notZeroAddr(tokenAddress) {
+    ) external onlyOwner notZeroAddr(tokenAddress) 
+    {
         // Only the owner address can ever receive the recovery withdrawal
         require(tokenAddress != token, "Not in migration");
         IERC20(tokenAddress).transfer(owner(), tokenAmount);
@@ -294,13 +304,19 @@ contract VeToken is AccessControl, VeTokenStorage {
         emit Recovered(tokenAddress, tokenAmount);
     }
 
-    function setScorePerBlk(uint256 scorePerBlk_) external onlyOwner {
+    function setScorePerBlk(
+        uint256 scorePerBlk_
+    ) external onlyOwner 
+    {
         scorePerBlk = scorePerBlk_;
 
         emit SetScorePerBlk(scorePerBlk_);
     }
 
-    function setClearBlk(uint256 clearBlk_) external onlyOwner {
+    function setClearBlk(
+        uint256 clearBlk_
+    ) external onlyOwner 
+    {
         clearBlk = clearBlk_;
 
         emit SetClearBlk(clearBlk_);
@@ -311,7 +327,7 @@ contract VeToken is AccessControl, VeTokenStorage {
     event Withdraw(uint256 value);
     event ApplySmartWalletChecker(address smartWalletChecker);
     event Recovered(address tokenAddress, uint256 tokenAmount);
-    event UpdateStakingPool(bool isClearScore);
+    event UpdateStakingPool(uint256 blockNumber);
     event SetScorePerBlk(uint256 scorePerBlk);
     event SetClearBlk(uint256 clearBlk);
 }
