@@ -24,7 +24,7 @@ contract VeTokenStorage is  ProxyStorage {
     uint256 public decimals = 18;
 
     // score related
-    uint256 public scorePerBlk; // 2500*10**18 / day, 2893519*10**10 * 14 / block
+    uint256 public scorePerBlk;
     uint256 public totalStaked;
 
     mapping (address => UserInfo) internal userInfo;
@@ -32,18 +32,18 @@ contract VeTokenStorage is  ProxyStorage {
     uint256 public startBlk;  // start Blk
     uint256 public clearBlk;  // set annually
     
-    // INFO | USER VARIABLES
+    // User variables
     struct UserInfo {
-        uint256 amount;     // How many tokens the user has provided.
-        uint256 score;      // score exclude pending amount
-        uint256 scoreDebt; // Reward debt. See explanation below.
-        uint256 lastUpdateBlk; // last tx Blk
+        uint256 amount;        // How many tokens the user has provided.
+        uint256 score;         // score exclude pending amount
+        uint256 scoreDebt;     // score debt
+        uint256 lastUpdateBlk; // last user's tx Blk
     }
 
-    // INFO | POOL VARIABLES
+    // Pool variables
     struct PoolInfo {      
-        uint256 lastUpdateBlk;    // Last block number that DGTs distribution occurs.
-        uint256 accScorePerToken;   // Accumulated socres per token, times 1e12. See below.
+        uint256 lastUpdateBlk;     // Last block number that score distribution occurs.
+        uint256 accScorePerToken;   // Accumulated socres per token, times 1e12. 
     }
 
     address public smartWalletChecker;
