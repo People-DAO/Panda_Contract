@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./VeTokenStorage.sol";
 import "./AccessControl.sol";
 
 /**
  * @title VeTokenCore
  * @dev Storage for the VeToken is at this address, while execution is delegated to the `veTokenImplementation`.
  */
-contract VeTokenProxy is AccessControl {
-    /**
-    * @notice Active brains of VeTokenProxy
-    */
-    address public veTokenImplementation;
+contract VeTokenProxy is AccessControl, ProxyStorage {
+    function _setPendingImplementation(
+        address newPendingImplementation_
+    ) public onlyOwner 
+    {
+        address oldPendingImplementation = pendingVeTokenImplementation;
 
-    /**
-    * @notice Pending brains of VeTokenProxy
-    */
-    address public pendingVeTokenImplementation;
+        pendingVeTokenImplementation = newPendingImplementation_;
+
+        emit NewPendingImplementation(oldPendingImplementation, pendingVeTokenImplementation);
+    }
 
     /**
     * @notice Accepts new implementation of comptroller. msg.sender must be pendingImplementation
@@ -24,7 +26,7 @@ contract VeTokenProxy is AccessControl {
     */
     function _acceptImplementation() public {
         // Check caller is pendingImplementation and pendingImplementation ≠ address(0)
-        require (msg.sender == veTokenImplementation && veTokenImplementation != address(0),
+        require (msg.sender == pendingVeTokenImplementation && pendingVeTokenImplementation != address(0),
                 "Invalid veTokenImplementation");
 
         // Save current values for inclusion in log
