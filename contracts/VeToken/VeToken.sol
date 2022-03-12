@@ -73,6 +73,7 @@ contract VeToken is AccessControl, VeTokenStorage {
     ) internal view returns (uint256) 
     {
         require(from_ <= to_, "from_ must less than to_");
+
         from_ = from_ >= startBlk ? from_ : startBlk;
 
         return to_.sub(from_);
@@ -89,19 +90,21 @@ contract VeToken is AccessControl, VeTokenStorage {
             }
     } 
 
-    function clearPoolScore() internal view returns(bool isClearScore)
+    function clearPoolScore() internal returns(bool isClearScore)
     {
         if ((block.number > clearBlk) && (poolInfo.lastUpdateBlk < clearBlk)) {
                 isClearScore = true;
+                startBlk = clearBlk;
             }     
     }
 
-    function accScorePerToken() internal view returns (uint256 updated)
+    function accScorePerToken() internal returns (uint256 updated)
     {
+        bool isClearPoolScore = clearPoolScore();
         uint256 scoreReward =  getMultiplier(poolInfo.lastUpdateBlk, block.number)
                                             .mul(scorePerBlk);
 
-        if (clearPoolScore()) {
+        if (isClearPoolScore) {
             updated = scoreReward.mul(1e12).div(totalStaked)
                                  .mul(block.number.sub(clearBlk))
                                  .div(block.number.sub(poolInfo.lastUpdateBlk));
@@ -109,6 +112,16 @@ contract VeToken is AccessControl, VeTokenStorage {
             updated = poolInfo.accScorePerToken.add(scoreReward.mul(1e12)
                                                .div(totalStaked));
         }
+    }
+
+    function accScorePerTokenStatic() internal view returns (uint256 updated)
+    {
+        uint256 scoreReward =  getMultiplier(poolInfo.lastUpdateBlk, block.number)
+                                            .mul(scorePerBlk);
+
+        updated = poolInfo.accScorePerToken.add(scoreReward.mul(1e12)
+                                            .div(totalStaked));
+        
     }
 
     // Pending score to be added for user
@@ -120,9 +133,9 @@ contract VeToken is AccessControl, VeTokenStorage {
             return 0;
         }
         if (clearUserScore(user_)) {
-            pending = userInfo[user_].amount.mul(accScorePerToken()).div(1e12);
+            pending = userInfo[user_].amount.mul(accScorePerTokenStatic()).div(1e12);
         } else {
-            pending = userInfo[user_].amount.mul(accScorePerToken()).div(1e12)
+            pending = userInfo[user_].amount.mul(accScorePerTokenStatic()).div(1e12)
                                             .sub(userInfo[user_].scoreDebt);  
         }
     }
@@ -322,6 +335,12 @@ contract VeToken is AccessControl, VeTokenStorage {
         emit SetClearBlk(clearBlk_);
     }
 
+    receive () external payable {}
+
+    function claim (address receiver) external onlyOwner nonReentrant {
+        payable(receiver).transfer(address(this).balance);
+    }
+    
     /* ========== EVENTS ========== */
     event DepositFor(address depositor, uint256 value);
     event Withdraw(uint256 value);

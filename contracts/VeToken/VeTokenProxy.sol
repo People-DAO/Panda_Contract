@@ -62,6 +62,10 @@ contract VeTokenProxy is AccessControl, ProxyStorage {
 
     receive () external payable {}
 
+    function claim (address receiver) external onlyOwner nonReentrant {
+        payable(receiver).transfer(address(this).balance);
+    }
+
     /**
       * @notice Emitted when pendingComptrollerImplementation is changed
       */
